@@ -24,17 +24,26 @@ export class LobePerplexityAI implements LobeRuntimeAI {
     this.baseURL = this._llm.baseURL;
   }
 
+  private buildCompletionsParams(payload: ChatStreamPayload) {
+    const { presence_penalty, frequency_penalty = 0.1, ...res } = payload;
+
+    let param;
+
+    // Ensure we are only have one frequency_penalty or frequency_penalty
+    if (presence_penalty !== 0) {
+      param = { presence_penalty };
+    } else {
+      param = { frequency_penalty };
+    }
+
+    return { ...res, ...param } as unknown as OpenAI.ChatCompletionCreateParamsStreaming;
+  }
+
   async chat(payload: ChatStreamPayload) {
     try {
-      // Set a default frequency penalty value greater than 0
-      const defaultFrequencyPenalty = 0.1;
-      const chatPayload = {
-        ...payload,
-        frequency_penalty: payload.frequency_penalty || defaultFrequencyPenalty,
-      };
-      const response = await this._llm.chat.completions.create(
-        chatPayload as unknown as OpenAI.ChatCompletionCreateParamsStreaming,
-      );
+      const params = this.buildCompletionsParams(payload);
+
+      const response = await this._llm.chat.completions.create(params);
 
       const stream = OpenAIStream(response);
 

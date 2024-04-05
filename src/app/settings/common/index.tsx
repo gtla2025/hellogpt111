@@ -8,6 +8,7 @@ import { CURRENT_VERSION } from '@/const/version';
 
 import Footer from '../features/Footer';
 import Common, { SettingsCommonProps } from './Common';
+import SystemAgent from './SystemAgent';
 import Theme from './Theme';
 
 export default memo<SettingsCommonProps>((props) => {
@@ -17,6 +18,7 @@ export default memo<SettingsCommonProps>((props) => {
     <>
       <PageTitle title={t('tab.common')} />
       <Theme />
+      <SystemAgent />
       <Common {...props} />
       <Footer>LobeChat v{CURRENT_VERSION}</Footer>
     </>

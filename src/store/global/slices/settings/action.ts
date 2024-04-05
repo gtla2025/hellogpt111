@@ -21,6 +21,7 @@ export interface SettingsAction {
     config: Partial<GlobalLLMConfig[T]>,
   ) => Promise<void>;
   setSettings: (settings: DeepPartial<GlobalSettings>) => Promise<void>;
+  setTranslationSystemAgent: (provider: string, model: string) => Promise<void>;
   switchThemeMode: (themeMode: ThemeMode) => Promise<void>;
   toggleProviderEnabled: (provider: GlobalLLMProviderKey, enabled: boolean) => Promise<void>;
   updateDefaultAgent: (agent: DeepPartial<LobeAgentSettings>) => Promise<void>;
@@ -58,7 +59,16 @@ export const createSettingsSlice: StateCreator<
     await userService.updateUserSettings(diffs);
     await get().refreshUserConfig();
   },
-
+  setTranslationSystemAgent: async (provider, model) => {
+    await get().setSettings({
+      systemAgent: {
+        translation: {
+          model: model,
+          provider: provider,
+        },
+      },
+    });
+  },
   switchThemeMode: async (themeMode) => {
     await get().setSettings({ themeMode });
   },

@@ -37,7 +37,7 @@ const SystemAgent = memo(() => {
   const settings = useGlobalStore(settingsSelectors.currentSettings, isEqual);
   const [setTranslationSystemAgent] = useGlobalStore((s) => [s.setTranslationSystemAgent]);
 
-  const select = useGlobalStore(modelProviderSelectors.modelSelectList, isEqual);
+  const select = useGlobalStore(modelProviderSelectors.modelProviderList, isEqual);
 
   const { styles } = useStyles();
 
@@ -46,7 +46,7 @@ const SystemAgent = memo(() => {
   const translationOptions = useMemo<SelectProps['options']>(() => {
     const getChatModels = (provider: ModelProviderCard) =>
       provider.chatModels
-        .filter((c) => !c.hidden)
+        .filter((c) => c.enabled)
         .map((model) => ({
           label: <ModelItemRender {...model} />,
           provider: provider.id,

@@ -1,5 +1,3 @@
-import { DeepPartial } from 'utility-types';
-
 import type { LobeAgentSession } from '@/types/session';
 
 import { GlobalBaseSettings } from './base';
@@ -19,16 +17,6 @@ export * from './tts';
 export interface GlobalTool {
   dalle: {
     autoGenerate: boolean;
-  };
-}
-
-export interface GlobalServerConfig {
-  customModelName?: string;
-  defaultAgent?: DeepPartial<GlobalDefaultAgent>;
-  enabledOAuthSSO?: boolean;
-  languageModel?: DeepPartial<GlobalLLMConfig>;
-  telemetry: {
-    langfuse?: boolean;
   };
 }
 

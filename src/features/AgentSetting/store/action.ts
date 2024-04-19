@@ -10,7 +10,7 @@ import { LobeAgentConfig } from '@/types/agent';
 import { MetaData } from '@/types/meta';
 import { setNamespace } from '@/utils/storeDebug';
 
-import { SessionLoadingState } from '../store/initialState';
+import { SessionLoadingState } from './initialState';
 import { State, initialState } from './initialState';
 import { ConfigDispatch, configReducer } from './reducers/config';
 import { MetaDataDispatch, metaDataReducer } from './reducers/meta';
@@ -91,9 +91,6 @@ export const store: StateCreator<Store, [['zustand/devtools', never]]> = (set, g
     const { dispatchMeta, config, meta, updateLoadingState, streamUpdateMetaString } = get();
 
     const systemRole = config.systemRole;
-
-    if (!systemRole) return;
-
     const preValue = meta.description;
 
     // 替换为 ...
@@ -115,9 +112,6 @@ export const store: StateCreator<Store, [['zustand/devtools', never]]> = (set, g
     const { dispatchMeta, config, meta, updateLoadingState, streamUpdateMetaArray } = get();
 
     const systemRole = config.systemRole;
-
-    if (!systemRole) return;
-
     const preValue = meta.tags;
 
     // 替换为 ...
@@ -141,9 +135,6 @@ export const store: StateCreator<Store, [['zustand/devtools', never]]> = (set, g
     const { dispatchMeta, config, meta, updateLoadingState, streamUpdateMetaString } = get();
 
     const systemRole = config.systemRole;
-
-    if (!systemRole) return;
-
     const previousTitle = meta.title;
 
     // 替换为 ...

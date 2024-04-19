@@ -1,6 +1,11 @@
 import { DEFAULT_LANG } from '@/const/locale';
 import { DEFAULT_AGENT_META } from '@/const/meta';
-import { DEFAULT_AGENT, DEFAULT_AGENT_CONFIG, DEFAULT_TTS_CONFIG } from '@/const/settings';
+import {
+  DEFAULT_AGENT,
+  DEFAULT_AGENT_CONFIG,
+  DEFAULT_SYSTEM_AGENT_CONFIG,
+  DEFAULT_TTS_CONFIG,
+} from '@/const/settings';
 import { Locales } from '@/locales/resources';
 import { GeneralModelProviderConfig, GlobalLLMProviderKey, GlobalSettings } from '@/types/settings';
 import { isOnServerSide } from '@/utils/env';
@@ -25,6 +30,9 @@ const defaultAgent = (s: GlobalStore) => merge(DEFAULT_AGENT, currentSettings(s)
 const defaultAgentConfig = (s: GlobalStore) => merge(DEFAULT_AGENT_CONFIG, defaultAgent(s).config);
 
 const defaultAgentMeta = (s: GlobalStore) => merge(DEFAULT_AGENT_META, defaultAgent(s).meta);
+
+const currentSystemAgent = (s: GlobalStore) =>
+  merge(DEFAULT_SYSTEM_AGENT_CONFIG, currentSettings(s).systemAgent);
 
 // TODO: Maybe we can also export settings difference
 const exportSettings = (s: GlobalStore) => {
@@ -52,6 +60,7 @@ const isDalleAutoGenerating = (s: GlobalStore) => currentSettings(s).tool?.dalle
 export const settingsSelectors = {
   currentLanguage,
   currentSettings,
+  currentSystemAgent,
   currentTTS,
   dalleConfig,
   defaultAgent,
